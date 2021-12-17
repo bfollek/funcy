@@ -71,3 +71,29 @@ func TestMapWithStringsToInts(t *testing.T) {
 // 	result := Map(sl, strings.ToLower)
 // 	require.Equal(expected, result)
 // }
+
+func TestReduceAddInts(t *testing.T) {
+	require := require.New(t)
+	expected := 14
+	sl := []int{2, 3, 4, 5}
+	result := Reduce(sl, 0, func(i, j int) int { return i + j })
+	require.Equal(expected, result)
+}
+
+func TestReduceAddStrings(t *testing.T) {
+	require := require.New(t)
+	expected := "home-made"
+	sl := []string{"home", "-", "made"}
+	result := Reduce(sl, "", func(s, t string) string { return s + t })
+	require.Equal(expected, result)
+}
+
+func TestReduceCanDoMap(t *testing.T) {
+	require := require.New(t)
+	expected := []string{"bat", "cat", "hat"}
+	sl := []string{"BAT", "CaT", "haT"}
+	result := Reduce(sl, []string{}, func(acc []string, s string) []string {
+		return append(acc, strings.ToLower(s))
+	})
+	require.Equal(expected, result)
+}

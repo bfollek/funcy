@@ -20,3 +20,11 @@ func Map[T1, T2 any](sl []T1, transform func(T1) T2) []T2 {
 	}
 	return rv
 }
+
+func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
+	accumulator := startValue
+	for _, elem := range sl {
+		accumulator = fReduce(accumulator, elem)
+	}
+	return accumulator
+}
