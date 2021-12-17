@@ -11,9 +11,9 @@ ok  	github.com/bfollek/funcy/pkg	(cached)
 
 ## Notes
 
-### Compile error, as expected, when you try something that doesn't make sense, 
+### Compile error, as expected, when you try something that doesn't make sense.
 
-For example, testing a call to `strings.ToLower` on ints:
+For example, a call to `strings.ToLower` on ints:
 
 ```go
 func TestMapBadFuncType(t *testing.T) {
@@ -25,7 +25,7 @@ func TestMapBadFuncType(t *testing.T) {
 }
 ```
 
-gets this:
+gets this when you test:
 
 ```
 # github.com/bfollek/funcy/pkg [github.com/bfollek/funcy/pkg.test]
@@ -36,7 +36,7 @@ FAIL
 
 ## Todo
 
-* Test and fix for edge cases - reasonable behavior when the slice is empty.
+* Test and fix edge cases - is there reasonable behavior when the slice is empty?
 * Implement `Sum` on top of `Reduce`. That's probably a chance to use a `constraint`, to make sure the slice elements are addable with `+`.
 
 
