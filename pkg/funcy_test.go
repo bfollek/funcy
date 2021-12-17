@@ -25,6 +25,14 @@ func TestFilterWithStrings(t *testing.T) {
 	require.Equal(expected, result)
 }
 
+func TestFilterWithEmptySlice(t *testing.T) {
+	require := require.New(t)
+	expected := []string{}
+	sl := []string{}
+	result := Filter(sl, func(s string) bool { return len(s) == 3 })
+	require.Equal(expected, result)
+}
+
 func TestMapWithInts(t *testing.T) {
 	require := require.New(t)
 	expected := []int{4, 6, 8, 10}
@@ -55,6 +63,14 @@ func TestMapWithStringsToInts(t *testing.T) {
 	require.Equal(expected, result)
 }
 
+func TestMapWithEmptySlice(t *testing.T) {
+	require := require.New(t)
+	expected := []int{}
+	sl := []int{}
+	result := Map(sl, func(i int) int { return i * 2 })
+	require.Equal(expected, result)
+}
+
 func TestReduceAddInts(t *testing.T) {
 	require := require.New(t)
 	expected := 14
@@ -78,5 +94,14 @@ func TestReduceCanDoMap(t *testing.T) {
 	result := Reduce(sl, []string{}, func(acc []string, s string) []string {
 		return append(acc, strings.ToLower(s))
 	})
+	require.Equal(expected, result)
+}
+
+func TestReduceWithEmptySlice(t *testing.T) {
+	require := require.New(t)
+	startValue := ""
+	expected := startValue
+	sl := []string{}
+	result := Reduce(sl, startValue, func(s, t string) string { return s + t })
 	require.Equal(expected, result)
 }

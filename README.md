@@ -36,7 +36,6 @@ FAIL
 
 ## Todo
 
-* Test and fix edge cases - is there reasonable behavior when the slice is empty?
 * Implement `Sum` on top of `Reduce`. That's probably a chance to use a `constraint`, to make sure the slice elements are addable with `+`.
 
 
