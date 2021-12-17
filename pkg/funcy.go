@@ -1,6 +1,3 @@
-// gob build pkg/funcy.go
-// gob build ./...
-
 package funcy
 
 func Filter[T any](sl []T, test func(T) bool) []T {
