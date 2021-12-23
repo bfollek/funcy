@@ -105,3 +105,55 @@ func TestReduceWithEmptySlice(t *testing.T) {
 	result := Reduce(sl, startValue, func(s, t string) string { return s + t })
 	require.Equal(expected, result)
 }
+
+func TestTransposeSquareInts(t *testing.T) {
+	require := require.New(t)
+	expected := [][]int{
+		{1, 4, 7},
+		{2, 5, 8},
+		{3, 6, 9},
+	}
+	sl := [][]int{
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 9},
+	}
+	result := Transpose(sl)
+	require.Equal(expected, result)
+}
+
+func TestTransposeMoreColsThanRowsInts(t *testing.T) {
+	require := require.New(t)
+	expected := [][]int{
+		{1, 4, 7, 10},
+		{2, 5, 8, 11},
+		{3, 6, 9, 12},
+	}
+	sl := [][]int{
+		{1, 2, 3},
+		{4, 5, 6},
+		{7, 8, 9},
+		{10, 11, 12},
+	}
+	result := Transpose(sl)
+	require.Equal(expected, result)
+}
+
+func TestTransposeMoreRowsThanColsInts(t *testing.T) {
+	require := require.New(t)
+	expected := [][]int{
+		{1, 4},
+		{2, 5},
+		{3, 6},
+	}
+	sl := [][]int{
+		{1, 2, 3},
+		{4, 5, 6},
+	}
+	result := Transpose(sl)
+	require.Equal(expected, result)
+}
+
+/*
+   (is (= [[1 4] [2 5] [3 6]] (transpose [[1 2 3] [4 5 6]])))))
+*/

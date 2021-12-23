@@ -26,6 +26,19 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 	return accumulator
 }
 
+// Transpose converts a two-dimensional slice of T[rows][columns]
+// to a two-dimensional slice of T[columns][rows].
 func Transpose[T any](sl [][]T)[][]T {
-	return sl
+	// Create `rv`, an empty slice of slices.
+	rv := make([][]T, len(sl[0])) // Use number of columns for rows.
+	for i := range rv {
+    	rv[i] = make([]T, len(sl)) // Use number of rows for columns.
+	}
+	// Fill in `rv`.
+	for i := range sl {
+		for j := range sl[0] {
+			rv[j][i] = sl[i][j]
+		}
+	}
+	return rv
 }
