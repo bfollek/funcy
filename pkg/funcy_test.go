@@ -153,3 +153,19 @@ func TestTransposeMoreRowsThanColsInts(t *testing.T) {
 	result := Transpose(input)
 	require.Equal(expecting, result)
 }
+
+func TestTransposeEmptyRowsInts(t *testing.T) {
+	require := require.New(t)
+	input := [][]int{}
+	expecting := input
+	result := Transpose(input)
+	require.Equal(expecting, result)
+}
+
+func TestTransposeEmptyColsInts(t *testing.T) {
+	require := require.New(t)
+	input := [][]int{{}}
+	expecting := input
+	result := Transpose(input)
+	require.Equal(expecting, result)
+}
