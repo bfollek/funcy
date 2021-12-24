@@ -49,7 +49,7 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	// Fill in `rv`.
 	for i, row := range sl {
 		if len(row) != num_cols {
-			return sl, fmt.Errorf(jaggedTransposeErrorFmt, num_cols, i, len(row))
+			return nil, fmt.Errorf(jaggedTransposeErrorFmt, num_cols, i, len(row))
 		}
 		for j := 0; j < num_cols; j++ {
 			rv[j][i] = sl[i][j]
