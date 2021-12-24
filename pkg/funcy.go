@@ -43,7 +43,8 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	} else {
 		num_cols = 0
 	}
-	if num_rows == 0 || num_cols == 0 {
+	// Edge cases where there's nothing to do.
+	if num_rows == 0 || (num_rows == 1 && num_cols == 0) {
 		return sl, nil
 	}
 	// Create `rv`, an empty slice of slices.
