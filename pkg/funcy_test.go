@@ -123,19 +123,6 @@ func TestTransposeSquareInts(t *testing.T) {
 	require.Equal(expecting, result)
 }
 
-func TestTransposeJaggedInts(t *testing.T) {
-	require := require.New(t)
-	input := [][]int{
-		{1, 2, 3},
-		{4, 5},
-		{7, 8, 9},
-	}
-	expectingError := "All rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 2)."
-	_, err := Transpose(input)
-	require.NotNil(err)
-	require.Equal(expectingError, err.Error())
-}
-
 func TestTransposeMoreColsThanRowsInts(t *testing.T) {
 	require := require.New(t)
 	input := [][]int{
@@ -171,7 +158,6 @@ func TestTransposeMoreRowsThanColsInts(t *testing.T) {
 }
 
 func TestTransposeEmptyRowsInts(t *testing.T) {
-	t.Skip()
 	require := require.New(t)
 	input := [][]int{}
 	expecting := input
@@ -181,9 +167,47 @@ func TestTransposeEmptyRowsInts(t *testing.T) {
 }
 
 func TestTransposeEmptyColsInts(t *testing.T) {
-	t.Skip()
 	require := require.New(t)
 	input := [][]int{{}}
+	expecting := input
+	result, err := Transpose(input)
+	require.Nil(err)
+	require.Equal(expecting, result)
+}
+
+func TestTransposeJaggedInts(t *testing.T) {
+	require := require.New(t)
+	input := [][]int{
+		{1, 2, 3},
+		{4, 5},
+		{7, 8, 9},
+	}
+	expectingError := "All rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 2)."
+	_, err := Transpose(input)
+	require.NotNil(err)
+	require.Equal(expectingError, err.Error())
+}
+
+func TestTransposeJaggedAndEmptyInts(t *testing.T) {
+	require := require.New(t)
+	input := [][]int{
+		{1, 2, 3},
+		{},
+		{7, 8, 9},
+	}
+	expectingError := "All rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 0)."
+	_, err := Transpose(input)
+	require.NotNil(err)
+	require.Equal(expectingError, err.Error())
+}
+
+func TestTransposeJaggedEmptyZerorowInts(t *testing.T) {
+	require := require.New(t)
+	input := [][]int{
+		{},
+		{4, 5, 6},
+		{7, 8, 9},
+	}
 	expecting := input
 	result, err := Transpose(input)
 	require.Nil(err)

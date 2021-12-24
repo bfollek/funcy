@@ -37,8 +37,13 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 // of elements.
 func Transpose[T any](sl [][]T)([][]T, error) {
 	num_rows := len(sl)
-	num_cols := len(sl[0])
-	if num_rows == 0 {
+	var num_cols int
+	if num_rows > 0 {
+		num_cols = len(sl[0])
+	} else {
+		num_cols = 0
+	}
+	if num_rows == 0 || num_cols == 0 {
 		return sl, nil
 	}
 	// Create `rv`, an empty slice of slices.
