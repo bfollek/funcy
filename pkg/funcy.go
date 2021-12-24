@@ -44,7 +44,7 @@ func Transpose[T any](sl [][]T)[][]T {
 	}
 	// Fill in `rv`.
 	for i := range sl {
-		for j := range sl[0] {
+		for j := 0; j < num_cols; j++ {
 			rv[j][i] = sl[i][j]
 		}
 	}
