@@ -4,6 +4,8 @@ import (
 	"fmt"
 )
 
+const jaggedTransposeErrorFmt = "All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)."
+
 func Filter[T any](sl []T, test func(T) bool) []T {
 	rv := make([]T, 0, len(sl))
 	for _, elem := range sl {
@@ -47,8 +49,7 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	// Fill in `rv`.
 	for i, row := range sl {
 		if len(row) != num_cols {
-			return sl, fmt.Errorf(
-				"All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d).", num_cols, i, len(row))
+			return sl, fmt.Errorf(jaggedTransposeErrorFmt, num_cols, i, len(row))
 		}
 		for j := 0; j < num_cols; j++ {
 			rv[j][i] = sl[i][j]
