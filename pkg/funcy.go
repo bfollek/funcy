@@ -26,16 +26,15 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 	return accumulator
 }
 
-// Transpose converts a two-dimensional slice of T[rows][columns]
-// to a two-dimensional slice of T[columns][rows].
+// Transpose converts a matrix from T[rows][columns] to T[columns][rows].
+// The matrix cannot be jagged, i.e. all rows must have the same number 
+// of elements.
 
-//  errors.New("unavailable"),
-
-func Transpose[T any](sl [][]T)[][]T {
+func Transpose[T any](sl [][]T)([][]T, error) {
 	num_rows := len(sl)
 	num_cols := len(sl[0])
 	if num_rows == 0 {
-		return sl
+		return sl, nil
 	}
 	// Create `rv`, an empty slice of slices.
 	rv := make([][]T, num_cols) // Columns transposed to rows.
@@ -43,10 +42,13 @@ func Transpose[T any](sl [][]T)[][]T {
     	rv[i] = make([]T, num_rows) // Rows transposed to columns.
 	}
 	// Fill in `rv`.
-	for i := range sl {
+	for i, row := range sl {
+		if len(row) != num_cols {
+			//errors.New("")
+		}
 		for j := 0; j < num_cols; j++ {
 			rv[j][i] = sl[i][j]
 		}
 	}
-	return rv
+	return rv, nil
 }

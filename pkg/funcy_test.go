@@ -118,7 +118,8 @@ func TestTransposeSquareInts(t *testing.T) {
 		{2, 5, 8},
 		{3, 6, 9},
 	}
-	result := Transpose(input)
+	result, err := Transpose(input)
+	require.Nil(err)
 	require.Equal(expecting, result)
 }
 
@@ -135,7 +136,8 @@ func TestTransposeJaggedInts(t *testing.T) {
 		{2, 5, 8},
 		{3, 9},
 	}
-	result := Transpose(input)
+	result, err := Transpose(input)
+	require.Nil(err)
 	require.Equal(expecting, result)
 }
 
@@ -152,7 +154,8 @@ func TestTransposeMoreColsThanRowsInts(t *testing.T) {
 		{2, 5, 8, 11},
 		{3, 6, 9, 12},
 	}
-	result := Transpose(input)
+	result, err := Transpose(input)
+	require.Nil(err)
 	require.Equal(expecting, result)
 }
 
@@ -167,7 +170,8 @@ func TestTransposeMoreRowsThanColsInts(t *testing.T) {
 		{2, 5},
 		{3, 6},
 	}
-	result := Transpose(input)
+	result, err := Transpose(input)
+	require.Nil(err)
 	require.Equal(expecting, result)
 }
 
@@ -176,7 +180,8 @@ func TestTransposeEmptyRowsInts(t *testing.T) {
 	require := require.New(t)
 	input := [][]int{}
 	expecting := input
-	result := Transpose(input)
+	result, err := Transpose(input)
+	require.Nil(err)
 	require.Equal(expecting, result)
 }
 
@@ -185,6 +190,7 @@ func TestTransposeEmptyColsInts(t *testing.T) {
 	require := require.New(t)
 	input := [][]int{{}}
 	expecting := input
-	result := Transpose(input)
+	result, err := Transpose(input)
+	require.Nil(err)
 	require.Equal(expecting, result)
 }
