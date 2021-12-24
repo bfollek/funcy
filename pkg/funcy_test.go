@@ -124,21 +124,16 @@ func TestTransposeSquareInts(t *testing.T) {
 }
 
 func TestTransposeJaggedInts(t *testing.T) {
-	t.Skip()
 	require := require.New(t)
 	input := [][]int{
 		{1, 2, 3},
 		{4, 5},
 		{7, 8, 9},
 	}
-	expecting := [][]int{
-		{1, 4, 7},
-		{2, 5, 8},
-		{3, 9},
-	}
-	result, err := Transpose(input)
-	require.Nil(err)
-	require.Equal(expecting, result)
+	expectingError := "All rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 2)."
+	_, err := Transpose(input)
+	require.NotNil(err)
+	require.Equal(expectingError, err.Error())
 }
 
 func TestTransposeMoreColsThanRowsInts(t *testing.T) {
