@@ -40,8 +40,6 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	var num_cols int
 	if num_rows > 0 {
 		num_cols = len(sl[0])
-	} else {
-		num_cols = 0
 	}
 	// Edge cases where there's nothing to do.
 	if num_rows == 0 || (num_rows == 1 && num_cols == 0) {
