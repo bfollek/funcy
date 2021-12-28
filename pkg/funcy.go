@@ -9,6 +9,7 @@ const jaggedTransposeErrorFmt = "All rows must be the same size as the zero row 
 
 // Filter returns items from a slice that satisfy a predicate function.
 func Filter[T any](sl []T, test func(T) bool) []T {
+	// Just use FilterWithIndex and a wrapper func that ignores the index.
 	return FilterWithIndex(sl, func(_ int, item T) bool {
 		return test(item)
 	})
