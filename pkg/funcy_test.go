@@ -33,6 +33,14 @@ func TestFilterWithEmptySlice(t *testing.T) {
 	require.Equal(expecting, result)
 }
 
+func TestFilterWithIndexWithInts(t *testing.T) {
+	require := require.New(t)
+	input := []int{1, 3, 5, 7, 9}
+	expecting := []int{1, 5, 9}
+	result := FilterWithIndex(input, func(index, _ int) bool { return index%2 == 0 })
+	require.Equal(expecting, result)
+}
+
 func TestMapWithInts(t *testing.T) {
 	require := require.New(t)
 	input := []int{2, 3, 4, 5}

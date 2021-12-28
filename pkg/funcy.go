@@ -9,9 +9,27 @@ const jaggedTransposeErrorFmt = "All rows must be the same size as the zero row 
 
 // Filter returns items from a slice that satisfy a predicate function.
 func Filter[T any](sl []T, test func(T) bool) []T {
+	return FilterWithIndex(sl, func(_ int, item T) bool {
+		return test(item)
+	})
+}
+// func Filter[T any](sl []T, test func(T) bool) []T {
+// 	rv := make([]T, 0, len(sl))
+// 	for _, elem := range sl {
+// 		if test(elem) {
+// 			rv = append(rv, elem)
+// 		}
+// 	}
+// 	return rv
+// }
+
+// FilterWithIndex is like Filter, but the predicate function receives
+// two arguments. The first is the int index of the second argument.
+// Returns items from a slice that satisfy the predicate function.
+func FilterWithIndex[T any](sl []T, test func(int, T) bool) []T {
 	rv := make([]T, 0, len(sl))
-	for _, elem := range sl {
-		if test(elem) {
+	for i, elem := range sl {
+		if test(i, elem) {
 			rv = append(rv, elem)
 		}
 	}
