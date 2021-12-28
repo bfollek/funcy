@@ -36,7 +36,4 @@ FAIL
 
 ## Todo
 
-* Implement `Sum` on top of `Reduce`. That's probably a chance to use a `constraint`, to make sure the slice elements are addable with `+`.
-
-
 
