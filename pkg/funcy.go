@@ -13,15 +13,6 @@ func Filter[T any](sl []T, test func(T) bool) []T {
 		return test(item)
 	})
 }
-// func Filter[T any](sl []T, test func(T) bool) []T {
-// 	rv := make([]T, 0, len(sl))
-// 	for _, elem := range sl {
-// 		if test(elem) {
-// 			rv = append(rv, elem)
-// 		}
-// 	}
-// 	return rv
-// }
 
 // FilterWithIndex is like Filter, but the predicate function receives
 // two arguments. The first is the int index of the second argument.
