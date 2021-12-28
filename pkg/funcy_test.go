@@ -106,6 +106,30 @@ func TestReduceWithEmptySlice(t *testing.T) {
 	require.Equal(expecting, result)
 }
 
+func TestSumInts(t *testing.T) {
+	require := require.New(t)
+	input := []int{1, 2, 3, 4, 5}
+	expecting := 15
+	result := Sum(input)
+	require.Equal(expecting, result)
+}
+
+func TestSumFloat64s(t *testing.T) {
+	require := require.New(t)
+	input := []float64{1.3, 2.7, 3.2, 4.8, 5.5}
+	expecting := 17.5
+	result := Sum(input)
+	require.Equal(expecting, result)
+}
+
+func TestSumStrings(t *testing.T) {
+	require := require.New(t)
+	input := []string{"That ", "crazy ", "cat"}
+	expecting := "That crazy cat"
+	result := Sum(input)
+	require.Equal(expecting, result)
+}
+
 func TestTransposeSquareInts(t *testing.T) {
 	require := require.New(t)
 	input := [][]int{

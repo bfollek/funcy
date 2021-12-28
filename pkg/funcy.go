@@ -1,6 +1,7 @@
 package funcy
 
 import (
+	"constraints"
 	"fmt"
 )
 
@@ -32,6 +33,15 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 	return accumulator
 }
 
+// Sum can be defined using Reduce.
+func Sum[T constraints.Ordered](sl []T) T {
+	// Alternative: reflect.Zero(T)
+	var zeroValue T
+	return Reduce(sl, zeroValue, func(acc T, nxt T) T {
+		return acc + nxt})
+
+}
+
 // Transpose converts a matrix from T[rows][columns] to T[columns][rows].
 // The matrix cannot be jagged, i.e. all rows must have the same number 
 // of elements.
@@ -61,3 +71,4 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	}
 	return rv, nil
 }
+
