@@ -7,6 +7,7 @@ import (
 
 const jaggedTransposeErrorFmt = "All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)."
 
+// Filter returns items from a slice that satisfy a predicate function.
 func Filter[T any](sl []T, test func(T) bool) []T {
 	rv := make([]T, 0, len(sl))
 	for _, elem := range sl {
@@ -17,6 +18,9 @@ func Filter[T any](sl []T, test func(T) bool) []T {
 	return rv
 }
 
+// Map runs each item in a slice through a transform function, and 
+// returns a slice of the transformed items. The transformed items may be a different
+// type, e.g. strings to ints using strconv.Atoi.
 func Map[T1, T2 any](sl []T1, transform func(T1) T2) []T2 {
 	rv := make([]T2, len(sl))
 	for i, elem := range sl {
@@ -25,6 +29,10 @@ func Map[T1, T2 any](sl []T1, transform func(T1) T2) []T2 {
 	return rv
 }
 
+// Reduce reduces each item of a slice to a single value, by running
+// each item through a function that takes an accumulator and the next item
+// as its paramaters. The classic example is reducing a slice of numbers by
+// adding them together.
 func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 	accumulator := startValue
 	for _, elem := range sl {
