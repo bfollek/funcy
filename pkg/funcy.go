@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-const jaggedTransposeErrorFmt = "All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)."
+const jaggedTransposeError = "All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)."
 
 // Filter returns items from a slice that satisfy a predicate function.
 func Filter[T any](sl []T, test func(T) bool) []T {
@@ -81,7 +81,7 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	// Fill in `rv`.
 	for i, row := range sl {
 		if len(row) != num_cols {
-			return nil, fmt.Errorf(jaggedTransposeErrorFmt, num_cols, i, len(row))
+			return nil, fmt.Errorf(jaggedTransposeError, num_cols, i, len(row))
 		}
 		for j := 0; j < num_cols; j++ {
 			rv[j][i] = sl[i][j]
