@@ -1,9 +1,19 @@
 package funcy
 
 import (
-	"constraints"
+	//"constraints"
 	"fmt"
 )
+
+// Ordered is a type constraint that matches any ordered type.
+// An ordered type is one that supports the <, <=, >, and >= operators.
+// https://blog.boot.dev/golang/how-to-use-golangs-generics/
+type Ordered interface {
+	~int | ~int8 | ~int16 | ~int32 | ~int64 |
+		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
+		~float32 | ~float64 |
+		~string
+}
 
 const jaggedTransposeError = "All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)."
 
@@ -28,13 +38,13 @@ func FilterWithIndex[T any](sl []T, test func(int, T) bool) []T {
 	return rv
 }
 
-// Map runs each item in a slice through a transform function, and 
+// Map runs each item in a slice through a transform function, and
 // returns a slice of the transformed items. The transformed items may be a different
 // type, e.g. strings to ints using strconv.Atoi.
 func Map[T1, T2 any](sl []T1, transform func(T1) T2) []T2 {
 	rv := make([]T2, len(sl))
 	for i, elem := range sl {
-			rv[i] = transform(elem)
+		rv[i] = transform(elem)
 	}
 	return rv
 }
@@ -52,18 +62,18 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 }
 
 // Sum can be defined using Reduce.
-func Sum[T constraints.Ordered](sl []T) T {
+func Sum[T Ordered](sl []T) T {
 	// Alternative: reflect.Zero(T)
 	var zeroValue T
 	return Reduce(sl, zeroValue, func(acc T, nxt T) T {
-		return acc + nxt})
-
+		return acc + nxt
+	})
 }
 
 // Transpose converts a matrix from T[rows][columns] to T[columns][rows].
-// The matrix cannot be jagged, i.e. all rows must have the same number 
+// The matrix cannot be jagged, i.e. all rows must have the same number
 // of elements.
-func Transpose[T any](sl [][]T)([][]T, error) {
+func Transpose[T any](sl [][]T) ([][]T, error) {
 	num_rows := len(sl)
 	var num_cols int
 	if num_rows > 0 {
@@ -76,7 +86,7 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	// Create `rv`, an empty slice of slices.
 	rv := make([][]T, num_cols) // Columns transposed to rows.
 	for i := range rv {
-    	rv[i] = make([]T, num_rows) // Rows transposed to columns.
+		rv[i] = make([]T, num_rows) // Rows transposed to columns.
 	}
 	// Fill in `rv`.
 	for i, row := range sl {
@@ -89,4 +99,3 @@ func Transpose[T any](sl [][]T)([][]T, error) {
 	}
 	return rv, nil
 }
-
