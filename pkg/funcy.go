@@ -1,7 +1,6 @@
 package funcy
 
 import (
-	//"constraints"
 	"fmt"
 )
 
@@ -74,26 +73,26 @@ func Sum[T Ordered](sl []T) T {
 // The matrix cannot be jagged, i.e. all rows must have the same number
 // of elements.
 func Transpose[T any](sl [][]T) ([][]T, error) {
-	num_rows := len(sl)
-	var num_cols int
-	if num_rows > 0 {
-		num_cols = len(sl[0])
+	numRows := len(sl)
+	var numCols int
+	if numRows > 0 {
+		numCols = len(sl[0])
 	}
 	// Edge cases where there's nothing to do.
-	if num_rows == 0 || (num_rows == 1 && num_cols == 0) {
+	if numRows == 0 || (numRows == 1 && numCols == 0) {
 		return sl, nil
 	}
 	// Create `rv`, an empty slice of slices.
-	rv := make([][]T, num_cols) // Columns transposed to rows.
+	rv := make([][]T, numCols) // Columns transposed to rows.
 	for i := range rv {
-		rv[i] = make([]T, num_rows) // Rows transposed to columns.
+		rv[i] = make([]T, numRows) // Rows transposed to columns.
 	}
 	// Fill in `rv`.
 	for i, row := range sl {
-		if len(row) != num_cols {
-			return nil, fmt.Errorf(jaggedTransposeError, num_cols, i, len(row))
+		if len(row) != numCols {
+			return nil, fmt.Errorf(jaggedTransposeError, numCols, i, len(row))
 		}
-		for j := 0; j < num_cols; j++ {
+		for j := 0; j < numCols; j++ {
 			rv[j][i] = sl[i][j]
 		}
 	}
