@@ -2,17 +2,9 @@ package funcy
 
 import (
 	"fmt"
-)
 
-// Ordered is a type constraint that matches any ordered type.
-// An ordered type is one that supports the <, <=, >, and >= operators.
-// https://blog.boot.dev/golang/how-to-use-golangs-generics/
-type Ordered interface {
-	~int | ~int8 | ~int16 | ~int32 | ~int64 |
-		~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr |
-		~float32 | ~float64 |
-		~string
-}
+	"golang.org/x/exp/constraints"
+)
 
 const jaggedTransposeError = "All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)."
 
@@ -61,7 +53,7 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 }
 
 // Sum can be defined using Reduce.
-func Sum[T Ordered](sl []T) T {
+func Sum[T constraints.Ordered](sl []T) T {
 	// Alternative: reflect.Zero(T)
 	var zeroValue T
 	return Reduce(sl, zeroValue, func(acc T, nxt T) T {
