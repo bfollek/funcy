@@ -1,13 +1,6 @@
 # funcy
 
-Experimenting with golang generics to implement functional favorites like filter, map, &amp;&amp; reduce. 
-
-2021-12 To run the tests, you need to install `go1.18beta1` and use it instead of the `go` command:
-
-```
-$ go1.18beta1 test ./...
-ok  	github.com/bfollek/funcy/pkg	(cached)
-```
+Experimenting with golang generics to implement functional favorites like `filter`, `map`, &amp;&amp; `reduce`. 
 
 ## Notes
 
