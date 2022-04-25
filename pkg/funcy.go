@@ -2,6 +2,7 @@ package funcy
 
 import (
 	"fmt"
+	"log"
 
 	"golang.org/x/exp/constraints"
 )
@@ -89,4 +90,13 @@ func Transpose[T any](sl [][]T) ([][]T, error) {
 		}
 	}
 	return rv, nil
+}
+
+// MustTranspose wraps `Transpose` and panics on error.
+func MustTranspose[T any](sl [][]T) [][]T {
+	rv, err := Transpose(sl)
+	if err != nil {
+		log.Panic(err)
+	}
+	return rv
 }

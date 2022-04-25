@@ -256,3 +256,20 @@ func TestTransposeJaggedEmptyZerorowInts(t *testing.T) {
 	require.NotNil(err)
 	require.Equal(expectingError, err.Error())
 }
+
+// https://stackoverflow.com/questions/31595791/how-to-test-panics
+func TestMustTransposePanics(t *testing.T) {
+	input := [][]int{
+		{3},
+		{4, 5},
+		{6, 7},
+	}
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("MustTranspose did not panic with this jagged matrix: %v\n", input)
+		}
+	}()
+
+	MustTranspose(input)
+}
