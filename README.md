@@ -8,6 +8,12 @@ Experimenting with golang generics to implement functional favorites like `filte
 $ go get github.com/bfollek/funcy@latest
 ```
 
+Then, in your code,
+
+```go
+import "github.com/bfollek/funcy"
+```
+
 ## Notes
 
 ### Compile error, as expected, when you try something that doesn't make sense.
