@@ -225,7 +225,7 @@ func TestTransposeJaggedInts(t *testing.T) {
 		{4, 5},
 		{7, 8, 9},
 	}
-	expectingError := "All rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 2)."
+	expectingError := "all rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 2)"
 	_, err := Transpose(input)
 	require.NotNil(err)
 	require.Equal(expectingError, err.Error())
@@ -238,7 +238,7 @@ func TestTransposeJaggedAndEmptyInts(t *testing.T) {
 		{},
 		{7, 8, 9},
 	}
-	expectingError := "All rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 0)."
+	expectingError := "all rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 0)"
 	_, err := Transpose(input)
 	require.NotNil(err)
 	require.Equal(expectingError, err.Error())
@@ -251,7 +251,7 @@ func TestTransposeJaggedEmptyZerorowInts(t *testing.T) {
 		{4, 5},
 		{6, 7},
 	}
-	expectingError := "All rows must be the same size as the zero row (len == 0). Row 1 is not the same size (len == 2)."
+	expectingError := "all rows must be the same size as the zero row (len == 0). Row 1 is not the same size (len == 2)"
 	_, err := Transpose(input)
 	require.NotNil(err)
 	require.Equal(expectingError, err.Error())

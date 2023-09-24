@@ -1,3 +1,15 @@
+// package funcy implements functional favorites like filter, map, and reduce.
+//
+// You'll get a compile error if you try something that doesn't make sense.
+// For example, using map to run strings.ToLower on a slice of ints:
+//
+//	sl := []int{1, 2, 3, 4}
+//	result := Map(sl, strings.ToLower)
+//
+// will get you an error like
+//
+//	pkg/funcy_test.go:64:20: type func(s string) string of strings.ToLower
+//	does not match inferred type func(int) T2 for func(T1) T2
 package funcy
 
 import (
@@ -7,9 +19,11 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-const jaggedTransposeError = "All rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)."
+const jaggedTransposeError = "all rows must be the same size as the zero row (len == %d). Row %d is not the same size (len == %d)"
 
-// Filter returns items from a slice that satisfy a predicate function.
+// Filter takes a slice of any type and a predicate function. It passes each
+// slice item to the predicate function, and returns a slice of the items
+// for which the predicate function returns true.
 func Filter[T any](sl []T, test func(T) bool) []T {
 	// Just use FilterWithIndex and a wrapper func that ignores the index.
 	return FilterWithIndex(sl, func(_ int, item T) bool {
@@ -18,8 +32,9 @@ func Filter[T any](sl []T, test func(T) bool) []T {
 }
 
 // FilterWithIndex is like Filter, but the predicate function receives
-// two arguments. The first is the int index of the second argument.
-// Returns items from a slice that satisfy the predicate function.
+// two arguments. The second argument is the slice item; the first
+// argument is the item's index within the slice. FilterWithIndex
+// returns a list of the items for which the predicate function returns true.
 func FilterWithIndex[T any](sl []T, test func(int, T) bool) []T {
 	rv := make([]T, 0, len(sl))
 	for i, elem := range sl {
@@ -30,9 +45,22 @@ func FilterWithIndex[T any](sl []T, test func(int, T) bool) []T {
 	return rv
 }
 
-// Map runs each item in a slice through a transform function, and
-// returns a slice of the transformed items. The transformed items may be a different
-// type, e.g. strings to ints using strconv.Atoi.
+// Map runs each item in a slice through a transformation function,
+// and returns a slice of the transformed items. The transformed items
+// may be a different type from the input items, e.g. strings to ints
+// using strconv.Atoi.
+//
+// Note: For tranformation functions that should check errors, like
+// strconv.Atoi, you can wrap the transformation function in a function
+// that handles the error:
+//
+//	result := Map(input, func(s string) int {
+//		i, err := strconv.Atoi(s)
+//		if err != nil {
+//			log.Fatal(err)
+//		}
+//		return i
+//	})
 func Map[T1, T2 any](sl []T1, transform func(T1) T2) []T2 {
 	rv := make([]T2, len(sl))
 	for i, elem := range sl {
@@ -41,8 +69,8 @@ func Map[T1, T2 any](sl []T1, transform func(T1) T2) []T2 {
 	return rv
 }
 
-// Reduce reduces each item of a slice to a single value, by running
-// each item through a function that takes an accumulator and the next item
+// Reduce reduces a slice to a single value by running each item of the slice
+// through a function that takes an accumulator and the next item
 // as its paramaters. The classic example is reducing a slice of numbers by
 // adding them together.
 func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
@@ -53,7 +81,7 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 	return accumulator
 }
 
-// Sum can be defined using Reduce.
+// Sum adds together the items in a slice.
 func Sum[T constraints.Ordered](sl []T) T {
 	// Alternative: reflect.Zero(T)
 	var zeroValue T
@@ -92,7 +120,7 @@ func Transpose[T any](sl [][]T) ([][]T, error) {
 	return rv, nil
 }
 
-// MustTranspose wraps `Transpose` and panics on error.
+// MustTranspose calls Transpose and panics on error.
 func MustTranspose[T any](sl [][]T) [][]T {
 	rv, err := Transpose(sl)
 	if err != nil {
