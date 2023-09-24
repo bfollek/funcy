@@ -50,9 +50,10 @@ func FilterWithIndex[T any](sl []T, test func(int, T) bool) []T {
 // may be a different type from the input items, e.g. strings to ints
 // using strconv.Atoi.
 //
-// Note: For tranformation functions that should check errors, like
-// strconv.Atoi, you can wrap the transformation function in a function
-// that handles the error:
+// Note: For functions that return multiple values, like strconv.Atoi,
+// wrap the function in another function that returns a single value,
+// and pass the wrapper as the transformation function. The wrapper
+// can handle errors, etc.:
 //
 //	result := Map(input, func(s string) int {
 //		i, err := strconv.Atoi(s)
@@ -81,7 +82,7 @@ func Reduce[T1, T2 any](sl []T1, startValue T2, fReduce func(T2, T1) T2) T2 {
 	return accumulator
 }
 
-// Sum adds together the items in a slice.
+// Sum sums the items in a slice.
 func Sum[T constraints.Ordered](sl []T) T {
 	// Alternative: reflect.Zero(T)
 	var zeroValue T
