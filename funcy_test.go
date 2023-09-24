@@ -1,6 +1,7 @@
 package funcy
 
 import (
+	"fmt"
 	"log"
 	"strconv"
 	"strings"
@@ -225,7 +226,7 @@ func TestTransposeJaggedInts(t *testing.T) {
 		{4, 5},
 		{7, 8, 9},
 	}
-	expectingError := "all rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 2)"
+	expectingError := fmt.Sprintf(jaggedTransposeError, len(input[0]), 1, len(input[1]))
 	_, err := Transpose(input)
 	require.NotNil(err)
 	require.Equal(expectingError, err.Error())
@@ -238,7 +239,7 @@ func TestTransposeJaggedAndEmptyInts(t *testing.T) {
 		{},
 		{7, 8, 9},
 	}
-	expectingError := "all rows must be the same size as the zero row (len == 3). Row 1 is not the same size (len == 0)"
+	expectingError := fmt.Sprintf(jaggedTransposeError, len(input[0]), 1, len(input[1]))
 	_, err := Transpose(input)
 	require.NotNil(err)
 	require.Equal(expectingError, err.Error())
@@ -251,7 +252,7 @@ func TestTransposeJaggedEmptyZerorowInts(t *testing.T) {
 		{4, 5},
 		{6, 7},
 	}
-	expectingError := "all rows must be the same size as the zero row (len == 0). Row 1 is not the same size (len == 2)"
+	expectingError := fmt.Sprintf(jaggedTransposeError, len(input[0]), 1, len(input[1]))
 	_, err := Transpose(input)
 	require.NotNil(err)
 	require.Equal(expectingError, err.Error())
